@@ -1,0 +1,41 @@
+name: Сообщить о проблеме
+description: Ошибка установки или проблема в игре
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за сообщение. Не прикладывайте образы игры и ссылки на них — такие issue будут удалены.
+  - type: input
+    id: device
+    attributes:
+      label: Устройство и версия Android
+      placeholder: AYN Thor, Android 14
+    validations:
+      required: true
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Профиль модов
+      options: ["both", "text", "graphics", "none", "не знаю"]
+    validations:
+      required: true
+  - type: dropdown
+    id: none_too
+    attributes:
+      label: Повторяется ли на профиле none (без русификации)?
+      options: ["да, повторяется", "нет, только с русификацией", "не проверял"]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Что произошло
+      description: Что делали, что ожидали, что получилось. Скриншот очень помогает.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи
+      description: Приложите архив из папки logs. Проверьте, что в нём нет вашего имени пользователя Windows.
