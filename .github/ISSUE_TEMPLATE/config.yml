@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Проблема самого порта (вылеты и без русификации)
+    url: https://github.com/linkzenic/2ship2harkinian-Android/issues
+    about: Если игра вылетает и на профиле none, сообщать нужно туда.
+  - name: Вопросы по переводу Zelda64Rus
+    url: http://shedevr.org.ru/zelda64rus
+    about: Текст и графика перевода — работа команды Zelda64Rus.
