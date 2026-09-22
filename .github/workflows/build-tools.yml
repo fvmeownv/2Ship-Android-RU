@@ -1,0 +1,23 @@
+name: build-tools
+
+on:
+  push:
+    paths: ["tools/src/**", ".github/workflows/build-tools.yml"]
+  pull_request:
+    paths: ["tools/src/**"]
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Compile tools
+        run: |
+          mkdir -p classes
+          javac -source 11 -target 11 -encoding UTF-8 -nowarn -d classes tools/src/*.java
+          ls -la classes
