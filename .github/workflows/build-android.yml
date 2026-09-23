@@ -1,0 +1,67 @@
+name: Android-установщик
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'android/**'
+      - 'tools/src/**'
+      - 'third_party/**'
+      - '.github/workflows/build-android.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+
+      - name: Ключ подписи приложения
+        run: |
+          mkdir -p android/build-signing
+          openssl pkcs12 -export \
+            -in android/app/src/main/assets/signing/cert.pem \
+            -inkey android/app/src/main/assets/signing/key.pem \
+            -name 2shipru -passout pass:2shipru \
+            -out android/build-signing/release.p12
+
+      - name: Сборка
+        working-directory: android
+        run: gradle --no-daemon --stacktrace assembleRelease
+
+      - name: Готовый файл
+        run: cp android/app/build/outputs/apk/release/app-release.apk 2Ship-RU-Installer.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 2Ship-RU-Installer
+          path: 2Ship-RU-Installer.apk
+
+      - name: Публикация тестовой сборки
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-test
+          name: Установщик для Android (тестовая сборка)
+          prerelease: true
+          make_latest: false
+          files: 2Ship-RU-Installer.apk
+          body: |
+            Тестовая сборка установщика русификации прямо на Android, без компьютера.
+            Обновляется автоматически после каждого изменения в репозитории.
+
+            Скачайте 2Ship-RU-Installer.apk на устройство, установите и следуйте шагам на экране.
+            От вас нужен только собственный образ Majora's Mask (США, версия 1.0).
+
+            Сборка №${{ github.run_number }}, коммит ${{ github.sha }}.
