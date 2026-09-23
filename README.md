@@ -126,4 +126,8 @@ The Legend of Zelda: Majora's Mask © Nintendo, 2000. Проект любите�
 
 ---
 
+Co-authored-by: Claude <noreply@anthropic.com>
+
+---
+
 **English:** Russian localization toolkit for the Android port of 2 Ship 2 Harkinian (Zelda: Majora's Mask). Contains tooling only — no ROM, no game assets. It patches the official APK, extracts Russian text, font and UI textures from the user's own Zelda64Rus-patched ROM and builds mod files locally. Two ways to install: the on-device installer app (`2Ship-RU-Installer.apk`, no PC needed) or Windows scripts over USB debugging. See [docs/TECHNICAL.md](docs/TECHNICAL.md).
