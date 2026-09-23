@@ -1,5 +1,8 @@
 name: Android-установщик
 
+# push в main — только проверка, что приложение собирается (APK лежит в артефактах запуска)
+# публикация релиза — APK прикрепляется к этому релизу
+# ручной запуск (Run workflow) — тестовая сборка в пре-релиз android-test
 on:
   push:
     branches: [ main ]
@@ -8,6 +11,8 @@ on:
       - 'tools/src/**'
       - 'third_party/**'
       - '.github/workflows/build-android.yml'
+  release:
+    types: [ published ]
   workflow_dispatch:
 
 permissions:
@@ -27,6 +32,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10.2'
+
+      - name: Номер версии из тега релиза
+        if: github.event_name == 'release'
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          echo "APP_VERSION=${TAG#v}" >> "$GITHUB_ENV"
 
       - name: Ключ подписи приложения
         run: |
@@ -49,7 +60,14 @@ jobs:
           name: 2Ship-RU-Installer
           path: 2Ship-RU-Installer.apk
 
-      - name: Публикация тестовой сборки
+      - name: Прикрепить к релизу
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" 2Ship-RU-Installer.apk --clobber --repo "${{ github.repository }}"
+
+      - name: Тестовая сборка
+        if: github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: android-test
@@ -58,10 +76,6 @@ jobs:
           make_latest: false
           files: 2Ship-RU-Installer.apk
           body: |
-            Тестовая сборка установщика русификации прямо на Android, без компьютера.
-            Обновляется автоматически после каждого изменения в репозитории.
-
-            Скачайте 2Ship-RU-Installer.apk на устройство, установите и следуйте шагам на экране.
-            От вас нужен только собственный образ Majora's Mask (США, версия 1.0).
+            Тестовая сборка для проверки изменений. Для обычной установки берите последний релиз.
 
             Сборка №${{ github.run_number }}, коммит ${{ github.sha }}.
