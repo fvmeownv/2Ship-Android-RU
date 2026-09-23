@@ -1,4 +1,4 @@
-﻿# 2Ship-Android-RU v1.0.0 - shared helpers
+﻿# 2Ship-Android-RU v1.1.0 - shared helpers
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 try { [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new() } catch {}
@@ -13,7 +13,7 @@ $script:Logs    = Join-Path $script:Pkg 'logs'
 $script:Reports = Join-Path $script:Pkg 'reports'
 New-Item -ItemType Directory -Force -Path $script:Files,$script:Tools,$script:Build,$script:Logs,$script:Reports | Out-Null
 
-$script:Version = '1.0.0'
+$script:Version = '1.1.0'
 $script:Package = 'com.twoshipfork.mm'
 $script:Stamp   = Get-Date -Format 'yyyyMMdd_HHmmss'
 

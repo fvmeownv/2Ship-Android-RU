@@ -5,6 +5,9 @@ plugins {
 // Номер сборки на GitHub Actions. Каждая новая сборка получает номер больше,
 // поэтому приложение обновляется поверх старого без удаления.
 def buildNumber = (System.getenv('GITHUB_RUN_NUMBER') ?: '1') as int
+// При публикации релиза workflow передаёт номер версии из тега (v1.1.0 → 1.1.0).
+// Остальные сборки — тестовые.
+def appVersion = System.getenv('APP_VERSION') ?: "1.1.0-test.${buildNumber}"
 // Файл ключа создаёт workflow из android/app/src/main/assets/signing/*.pem
 def releaseKeystore = rootProject.file('build-signing/release.p12')
 
@@ -17,7 +20,7 @@ android {
         minSdk 26
         targetSdk 34
         versionCode buildNumber
-        versionName "1.1.0-beta.${buildNumber}"
+        versionName appVersion
     }
 
     signingConfigs {
