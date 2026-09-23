@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Номер сборки на GitHub Actions. Каждая новая сборка получает номер больше,
+// поэтому приложение обновляется поверх старого без удаления.
+def buildNumber = (System.getenv('GITHUB_RUN_NUMBER') ?: '1') as int
+// Файл ключа создаёт workflow из android/app/src/main/assets/signing/*.pem
+def releaseKeystore = rootProject.file('build-signing/release.p12')
+
+android {
+    namespace 'io.github.fvmeownv.twoshipru'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'io.github.fvmeownv.twoshipru'
+        minSdk 26
+        targetSdk 34
+        versionCode buildNumber
+        versionName "1.1.0-beta.${buildNumber}"
+    }
+
+    signingConfigs {
+        release {
+            if (releaseKeystore.exists()) {
+                storeFile releaseKeystore
+                storeType 'pkcs12'
+                storePassword '2shipru'
+                keyAlias '2shipru'
+                keyPassword '2shipru'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig releaseKeystore.exists() ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    sourceSets {
+        main {
+            // Те же самые утилиты, что и в версии для ПК: файлы берутся прямо из tools/src
+            java.srcDir '../../tools/src'
+            // Патч перевода и обязательный readme авторов берутся из third_party/zelda64rus
+            assets.srcDir '../../third_party'
+        }
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Подпись APK прямо на устройстве (библиотека Google, та же, что внутри apksigner)
+    implementation 'com.android.tools.build:apksig:8.7.3'
+}

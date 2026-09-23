@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- маска в форме сердца -->
+    <path
+        android:fillColor="#7B3FA0"
+        android:pathData="M54,82 C31,67 24,53 24,41 C24,31.5 31,25 39,25 C46,25 51,29.5 54,35 C57,29.5 62,25 69,25 C77,25 84,31.5 84,41 C84,53 77,67 54,82 Z" />
+    <path
+        android:fillColor="#E9A93A"
+        android:pathData="M36,45 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0 Z M58,45 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0 Z" />
+    <path
+        android:fillColor="#16112A"
+        android:pathData="M40,45 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z M62,45 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z" />
+</vector>
