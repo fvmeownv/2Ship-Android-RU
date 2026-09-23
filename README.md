@@ -98,6 +98,7 @@ SHA-1:  D6133ACE5AFAA0882CF214CF88DABA39E266C078
 - **[Zelda64Rus](http://shedevr.org.ru/zelda64rus)** и группа **[Шедевр](http://shedevr.org.ru)** — русский перевод Majora's Mask (v2.0 beta, 2019). Весь русский текст и вся русская графика — их работа. Патч включён в репозиторий и в приложение. Авторы: FoX (FoX_XoF), Антон, САНЕК; версия 1.0 (2006–2007): gottaX, Alex (Kareg), Coregon, CaH4e3. © Шедевр 2006, 2007 / © Zelda64RUS 2019.
 - **[uber-apk-signer](https://github.com/patrickfav/uber-apk-signer)** (Patrick Favre-Bulle) — подпись APK в скриптах для компьютера, скачивается при установке.
 - **[apksig](https://android.googlesource.com/platform/tools/apksig/)** (The Android Open Source Project, Apache License 2.0) — подпись APK в приложении для Android.
+- **Claude** (ИИ-ассистент компании Anthropic) — большая часть кода, включая приложение для Android. Автор проекта ставил задачи, принимал решения, проверял всё на устройстве и договаривался с авторами перевода.
 
 The Legend of Zelda: Majora's Mask © Nintendo, 2000. Проект любительский, с Nintendo никак не связан и распространяется бесплатно.
 
@@ -123,10 +124,6 @@ The Legend of Zelda: Majora's Mask © Nintendo, 2000. Проект любите�
 - Со скриптами приложите логи из папки `logs`. Перед отправкой посмотрите, нет ли в них вашего имени пользователя Windows.
 
 Если игра вылетает и без русификации (в приложении — «Без русификации», в скриптах — профиль `none`), проблема не здесь, а в самом порте: [issues апстрима](https://github.com/linkzenic/2ship2harkinian-Android/issues).
-
----
-
-Co-authored-by: Claude <noreply@anthropic.com>
 
 ---
 
